@@ -8,10 +8,7 @@ venv/
 
 saved_model/*.h5
 
-
 .vscode/
-
-
 
 Thumbs.db    
 desktop.ini  
