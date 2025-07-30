@@ -16,5 +16,4 @@ saved_model/*.h5
 Thumbs.db    
 desktop.ini  
 
-dataset/PetImages/Cat/*.jpg
-dataset/PetImages/Dog/*.jpg
+dataset/
