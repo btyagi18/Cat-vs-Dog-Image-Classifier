@@ -16,10 +16,10 @@ classifier_model = None
 try:
     classifier_model = load_model(MODEL_PATH)
     classifier_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-    print("✨ AI Model loaded successfully for web predictions!")
+    print("AI Model loaded successfully for web predictions!")
 except Exception as e:
-    print(f"🚨 ERROR: Failed to load the AI model from '{MODEL_PATH}'.")
-    print(f"Please ensure '{MODEL_PATH}' exists and is not corrupted. Details: {e}")
+    print(" ERROR: Failed to load the AI model from '{MODEL_PATH}'.")
+    print("Please ensure '{MODEL_PATH}' exists and is not corrupted. Details: {e}")
 
 def preprocess_image_for_web(img_data):
     """
@@ -87,5 +87,4 @@ def predict_image_route():
 
 # --- Run the Flask Application ---
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(debug=False, host='0.0.0.0', port=port)
+    app.run(debug=True, port=5000)
