@@ -1,12 +1,10 @@
-
 __pycache__/
-
-/venv/
-
-/saved_model/*.h5
-
+venv/
+saved_model/*.h5
 .vscode/
+desktop.ini
 
-desktop.ini 
-
-/dataset/
+dataset/
+PetImages/
+PetImages/Cat/
+PetImages/Dog/
