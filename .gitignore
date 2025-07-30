@@ -1,0 +1,12 @@
+
+__pycache__/
+
+/venv/
+
+/saved_model/*.h5
+
+.vscode/
+
+desktop.ini 
+
+/dataset/

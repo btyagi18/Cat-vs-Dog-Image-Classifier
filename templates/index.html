@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat vs Dog Image classification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="card">
+        <h1>🐶🐱 What's This Pet?</h1>
+        <p class="tagline">Upload an image to identify if it's a Cat or a Dog!</p>
+
+        <div class="upload-section">
+            <label for="imageUpload" class="upload-button">
+                Choose Image
+            </label>
+            <input type="file" id="imageUpload" accept="image/*" hidden>
+            <span id="fileNameDisplay" class="file-name">No file chosen</span>
+
+            <div class="image-display">
+                <img id="previewImage" src="#" alt="Image Preview">
+                <p id="placeholderText">Your image preview will appear here.</p>
+            </div>
+
+            <button id="classifyButton" class="action-button" disabled>Classify Pet</button>
+        </div>
+
+        <div class="result-section">
+            <p><strong>Prediction:</strong> <span id="predictionResult">Upload an image to start.</span></p>
+            <p><strong>Confidence:</strong> <span id="confidenceResult"></span></p>
+            <p class="error-message" id="errorMessage"></p>
+        </div>
+    </div>
+
+    <script>
+        // Get references to all the HTML elements we need to interact with
+        const imageUpload = document.getElementById('imageUpload');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        const previewImage = document.getElementById('previewImage');
+        const placeholderText = document.getElementById('placeholderText');
+        const classifyButton = document.getElementById('classifyButton');
+        const predictionResult = document.getElementById('predictionResult');
+        const confidenceResult = document.getElementById('confidenceResult');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // --- Event Listener for Image Selection ---
+        imageUpload.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                fileNameDisplay.textContent = file.name;
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                    placeholderText.style.display = 'none';
+                    classifyButton.disabled = false;
+                    errorMessage.textContent = '';
+                    predictionResult.textContent = 'Ready to classify...';
+                    confidenceResult.textContent = '';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                fileNameDisplay.textContent = 'No file chosen';
+                previewImage.src = '#';
+                previewImage.style.display = 'none';
+                placeholderText.style.display = 'block';
+                classifyButton.disabled = true;
+                predictionResult.textContent = 'Upload an image to start.';
+                confidenceResult.textContent = '';
+            }
+        });
+
+        // --- Event Listener for Classify Button Click ---
+        classifyButton.addEventListener('click', function() {
+            const file = imageUpload.files[0];
+            if (!file) {
+                errorMessage.textContent = 'Please select an image first!';
+                return;
+            }
+
+            classifyButton.disabled = true;
+            predictionResult.textContent = 'Classifying...';
+            confidenceResult.textContent = '';
+            errorMessage.textContent = '';
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    errorMessage.textContent = `Error: ${data.error}`;
+                    predictionResult.textContent = 'Failed';
+                    confidenceResult.textContent = '';
+                } else {
+                    predictionResult.textContent = data.label;
+                    confidenceResult.textContent = data.confidence;
+                    errorMessage.textContent = '';
+                }
+            })
+            .catch(error => {
+                console.error('Network or server error:', error);
+                errorMessage.textContent = 'Failed to connect to the server. Please check your console for details.';
+                predictionResult.textContent = 'Failed';
+                confidenceResult.textContent = '';
+            })
+            .finally(() => {
+                classifyButton.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
