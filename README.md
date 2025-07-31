@@ -1,4 +1,4 @@
- 🐶🐱 Cat vs Dog Image Classifier
+ 🐶🐱Cat vs Dog Image Classifier
 
 📌 Features:
 
@@ -9,7 +9,7 @@
 - ✅ Model validation on unseen test data
 - 🌐 Web interface for image upload and prediction
   
-  🧠 CNN architecture includes:
+🧠 CNN architecture includes:
 
 - Convolutional Layers: For feature extraction
 - Max Pooling Layers: For spatial reduction
