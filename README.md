@@ -31,3 +31,7 @@
 - HTML, CSS, JavaScript (for the frontend UI)
 - VS Code (for training & development)
 
+
+
+https://github.com/user-attachments/assets/9bd702b1-46b8-4647-9624-303bbb53e18e
+
