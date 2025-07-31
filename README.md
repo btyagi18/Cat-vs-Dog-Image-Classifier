@@ -32,6 +32,5 @@
 - VS Code (for training & development)
 
 
-
-https://github.com/user-attachments/assets/9bd702b1-46b8-4647-9624-303bbb53e18e
+https://github.com/user-attachments/assets/107f3a70-6d63-4c2d-a2a7-79ca72beb9a6
 
